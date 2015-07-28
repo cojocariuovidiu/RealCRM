@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>Real Time CRM</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-route.js"></script>
+    <script src="//code.angularjs.org/1.2.13/angular-cookies.js"></script>
+    <script src="js/mainController.js"></script>
+    <script src="js/projectCtrl.js"></script>
+    <script src="js/clientController.js"></script>
+    <script src="js/signupCtrl.js"></script>
+    <script src="modules/authentication/controller.js"></script>
+    <script src="modules/authentication/services.js"></script>
+</head>
+
+<body>
+<a href="#login" ><i class="fa fa-lock"></i> Log in</a>
+<a href="#signup" ><i class=" fa fa-pencil"></i> Register</a>
+<a href="#add-client"><i class="fa fa-shield"></i> Clients</a>
+<a href="#login" > Log out</a>
+
+    
+<div ng-view></div>
+  
+</body>
+</html>

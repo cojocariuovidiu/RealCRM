@@ -1,0 +1,119 @@
+
+
+<div ng-controller="projectListCtrl">
+
+<div class="container">
+    <h1>Real Time CRM Client Projects</h1>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title"><strong>Project List ({{(projects | filter:project).length}})</strong></h3>
+					<div class="pull-right">
+						<span class="filter" title="Refresh projects" ng-click="list()">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</span>
+						<span class="filter" title="New project" ng-click="formModal(0)">
+							<i class="glyphicon glyphicon-plus"></i>
+						</span>
+					</div>
+				</div>
+				<div class="panel-body">
+					<input type="text" class="form-control" id="task-table-filter"  ng-model="project" placeholder="Search Projects" />
+				</div>
+				<table class="table table-hover" id="task-table" ng-table="tableParams" show-filter="true">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Project Title</th>
+							<th>Contract Number</th>
+							<th>Start Date</th>
+							<th>End Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-show="(projects | filter:project).length == 0">
+							<td>No records found</td>
+						</tr>
+						<tr ng-show="(projects | filter:project).length != 0" ng-repeat="project in projects | filter:project ">
+							<td>{{$index + 1}}</td>
+							<td><a href="#project-details/{{project.id}}">{{project.projectName}}</a></td>
+							<td>{{project.contractNumber}}</td>
+							<td>{{project.startDate}}</td>
+                            <td>{{project.endDate}}</td>
+							<td>
+								<button type="button" class="btn btn-info" ng-click="formModal(project.id, project)"><span class="glyphicon glyphicon-pencil"></span></button>
+								<button type="button" class="btn btn-danger" ng-click="deleteModal(project.id)"><span class="glyphicon glyphicon-remove"></span></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabelEdit" ng-hide="newProject">Edit Project: {{currentProject.projectName}}</h4>
+                    <h4 class="modal-title" id="myModalLabelNew" ng-show="newProject">New Project</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" name="myform" id="myform1" ng-submit="save()">
+                        <input type="hidden" id="projectId" ng-model="currentProject.id">
+                        <div class="form-group">
+                            <label for="projectTitle" class="col-sm-2 control-label">Project Title</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="projectTitle" placeholder="Project Title" ng-model="currentProject.projectName" size=50 required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contractNumber" class="col-sm-2 control-label">Contract Number</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="contractNumber"  placeholder="Contract Number" ng-model="currentProject.contractNumber" size=50 >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDate" class="col-sm-2 control-label">Start Date</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="startDate" placeholder="Start Date" ng-model="currentProject.startDate"  required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate" class="col-sm-2 control-label">End Date</label>
+                            <div class="col-sm-8 ">
+                                <input type="date" class="form-control" id="endDate" placeholder="Start Date" ng-model="currentProject.endDate"  required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">{{newProject && 'Add' || 'Edit'}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <!--<h4 class="modal-title" id="myModalLabel">Delete Customer</h4>-->
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete??
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" ng-click="deleteRecord();">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

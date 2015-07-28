@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-sm-6 col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong> Register Here</strong>
+            </div>
+            <div class="panel-body">
+                <form role="form"  name="loginForm" ng-submit="save()" ng-controller="registerCtrl">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                        <input class="form-control" id="firstName" placeholder="First Name"  type="text" ng-model="currentUser.firstName">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                        <input class="form-control" id="lastName" placeholder="Last Name"  type="text" ng-model="currentUser.lastName">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                        <input class="form-control" id="username" placeholder="Username"  type="text" ng-model="currentUser.username">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                        </span>
+                                        <input class="form-control" placeholder="Password" id="password" type="password" ng-model="currentUser.password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                        </span>
+                                        <input class="form-control"  id="passwordConfirm" type="password" ng-model="currentUser.passwordConfirm">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-lg btn-primary btn-block" >Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+<!--
+            <div class="panel-footer ">
+                <p>Don't have an account? <a href="#signup"> Sign Up Here </a></p>
+                <p>Forgot your password?<a href="#forgot"> Recover Password</a></p>
+            </div>
+-->
+        </div>
+    </div>
+</div>

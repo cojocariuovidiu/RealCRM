@@ -1,0 +1,211 @@
+<div class="container" >
+<h1>Real Time CRM Project Details</h1>
+
+<!---- start of top form ---->
+        <form class="form-horizontal" role="form" name="myform3" id="myform3" ng-submit="save()" ng-controller="projectCtrl">
+            <div class="container">
+                <input type="hidden" id="projectId" ng-model="currentProject.id">
+                <div class="form-group col-md-6">
+                    <label for="projectTitle" class="col-sm-2 control-label">Project Title</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="projectTitle" placeholder="Project Title" ng-model="currentProject.projectName" size=50 >
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="contractNumber" class="col-sm-2 control-label">Contract Number</label>
+                    <div class="col-sm-4">
+                        <input type="text"  class="form-control" id="contractNumber" ng-model="currentProject.contractNumber">
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="hourlyRate" class="col-sm-2 control-label">Hourly Rate</label>
+                    <div class="col-sm-4">
+                        <input type="text"  class="form-control" id="hourlyRate" placeholder="Hourly Rate" ng-model="currentProject.hourlyRate">
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="laborRate" class="col-sm-2 control-label">Labor Rate</label>
+                    <div class="col-sm-4 ">
+                        <input type="text" class="form-control" id="laborRate" placeholder="Labor Rate" ng-model="currentProject.laborRate">
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="startDate" class="col-sm-2 control-label">Start Date</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control" id="startDate" placeholder="Start Date" ng-model="currentProject.startDate" >
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="endDate" class="col-sm-2 control-label">End Date</label>
+                    <div class="col-sm-4 ">
+                        <input type="date" class="form-control" id="endDate" placeholder="Start Date" ng-model="currentProject.endDate" >
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="form-group col-md-6">
+                    <label for="fileUpload" class="col-sm-2 control-label">Upload Contract PDF</label>
+                    <div class="col-sm-4">
+                        <input type="file" class="form-control" id="fileUpload"  ng-model="currentProjectDetail.projectItem" > <!--- fix this script---->
+                        <input type="button" class="form-control" onclick="uploadFile()" value="Upload" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="workScope" class="col-sm-2 control-label">Scope of Work</label>
+                    <div class="col-sm-4">
+                        <textarea class="form-control" id="workScope" placeholder="Scope of Work" ng-model="currentProject.scopeOfWork"></textarea>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="totalCost" class="col-sm-2 control-label">Total Billed</label>
+                    <div class="col-sm-4">
+                        <textarea class="form-control" type="number" id="totalCost" placeholder="Total Cost" ng-model="currentProject.totalCost"></textarea>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="actualCost" class="col-sm-2 control-label">Cost of Labor</label>
+                    <div class="col-sm-4 ">
+                        <textarea type="number"  class="form-control" id="actualCost" placeholder="Actual Cost" ng-model="currentProject.actualCost"></textarea>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="profitOrLoss" class="col-sm-2 control-label">Profit / Loss</label>
+                    <div class="col-sm-4">
+                        <textarea type="number" class="form-control" id="profitOrLoss" placeholder="Profit or Loss" ng-model="currentProject.profitOrLoss"></textarea>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="profitMargin" class="col-sm-2 control-label">Profit Margin</label>
+                    <div class="col-sm-4 ">
+                        <textarea type="number" class="form-control" id="profitMargin" ng-model="currentProject.profitMargin" ></textarea> <!----make this a calc field ---->
+                    </div>
+                </div>
+                <div class="form-footer form-group col-md-6">
+                    <button type="submit" class="btn btn-primary">Update Project</button>
+                </div>
+            </div>
+        </form>
+<!--- end of top form --->
+<!--- start of table --->
+<div ng-controller="projectDetailCtrl">
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>Project Details ({{(projectDetails).length}})</strong>
+                    </h3>
+                    <div class="pull-right">
+                        <span class="filter" title="New Project Detail" ng-click="getRecord(project_id);">
+                          <i class="glyphicon glyphicon-refresh"/>
+                        </span>
+                        <span class="filter" title="New Project Detail" ng-click="formModal(0)">
+                          <i class="glyphicon glyphicon-plus"/>
+                        </span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <input type="text" class="form-control" id="task-table-filter"  ng-model="projectDetail" placeholder="Search Project Line Items" />
+                </div>
+                <table class="table table-hover" id="task-table" ng-table="tableParams" show-filter="true">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Project Item</th>
+                            <th>Contract Hours</th>
+                            <th>Estimated Hours</th>
+                            <th>Actual Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="(currentProject.projectDetails).length == 0">
+                            <td>No records found</td>
+                        </tr>
+                        <tr ng-show="(currentProject.projectDetails).length != 0" ng-repeat="projectDetail in currentProject.projectDetails">
+                            <td>{{$index + 1}}</td>
+                            <td>{{projectDetail.projectItem}}</td>
+                            <td>{{projectDetail.contractHours}}</td>
+                            <td>{{projectDetail.estimatedHours}}</td>
+                            <td>{{projectDetail.actualHours}}</td>
+                            <td>
+                                <button type="button" class="btn btn-info" ng-click="formModal(projectDetail._id, projectDetail)">
+                                    <span class="glyphicon glyphicon-pencil"/>
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="deleteModal(projectDetail._id)">
+                                    <span class="glyphicon glyphicon-remove"/>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="myModalLabelEdit" ng-hide="newProjectDetail">Edit Project Line Item</h4>
+                        <h4 class="modal-title" id="myModalLabelNew" ng-show="newProjectDetail">New Project Line Item</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" name="myform4" id="myform4" ng-submit="save()"> <!--- saveModal()--->
+                            <input type="hidden" id="projectDetailId" ng-model="currentProjectDetail._id">
+                            <div class="form-group">
+                                <label for="projectItem" class="col-sm-2 control-label">Line Item</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="projectItem" placeholder="Project Item" ng-model="currentProjectDetail.projectItem" size=50 required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractHours" class="col-sm-2 control-label">Contract Hours</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="contractHours" placeholder="Contract Hours" ng-model="currentProjectDetail.contractHours" size=50 required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="estimatedHours" class="col-sm-2 control-label">Estimated Hours</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="estimatedHours" placeholder="Estimated Project Hours" ng-model="currentProjectDetail.estimatedHours"  required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="actualHours" class="col-sm-2 control-label">Actual Hours</label>
+                                <div class="col-sm-8 ">
+                                    <input type="text" class="form-control" id="actualHours" placeholder="Actual Project Hours" ng-model="currentProjectDetail.actualHours"  required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">{{newProjectDetail && 'Add' || 'Edit'}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <!--<h4 class="modal-title" id="myModalLabel">Delete Customer</h4>-->
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete??
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-primary" ng-click="deleteRecord();">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--- end of table --->
+
+</div>
+
+</div>
